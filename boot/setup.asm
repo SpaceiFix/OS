@@ -1,23 +1,25 @@
 bits 16
 org 0x7c00
-
+mov ah, 0x00
+mov al, 0x03
 start:
+	cli
 	xor ax, ax
 	mov ss, ax
 	mov sp, 0x7c00
+	sti
+
+	mov [boot_drive], dl
 
 	mov si, string_setup
 	call print_string
-
-	xor ax, ax
-	int 0x16
 	
 	mov ah, 0x02
 	mov al, 1
 	mov ch, 0
 	mov cl, 2
 	mov dh, 0
-	mov [boot_drive], dl
+	mov dl, [boot_drive]
 
 	mov bx, 0x7e0
 	mov es, bx
@@ -43,10 +45,9 @@ print_string:
 .done:
 	ret
 
-string_setup db "Setup stage: OK", 0
-disk_fail_msg db "Setup stage: !", 0
+string_setup db "Setup stage: OK", 0Dh, 0Ah, 0
+disk_fail_msg db "Setup stage: !", 0Dh, 0Ah, 0
 
 boot_drive db 0
-
 times 510-($-$$) db 0
 dw 0xaa55

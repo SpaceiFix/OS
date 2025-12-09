@@ -1,20 +1,55 @@
 bits 16
 org 0x7e00
 
-start_stage1:
-	mov si, msg_stage1
-	call print_string
+start:
+	cli
+	xor ax, ax
+	mov ds, ax
+	mov es, ax
+	mov ss, ax
+	mov sp, 0x7e00
 
-	jmp $
+	in al, 0x92
+	or al, 2
+	out 0x92, al
 
-print_string:
+	lgdt [gdt_descriptor]
+
+	mov eax, cr0
+	or eax, 1
+	mov cr0, eax
+
+	jmp 0x08:protected_entry
+
+bits 32
+protected_entry:
+	mov ax, 0x10
+	mov ds, ax
+	mov ss, ax
+	mov esp, 0x90000
+
+	mov edi, 0xb8000
+	mov esi, pm_msg_ok
+.print:
 	lodsb
-	or al, al
+	test al, al
 	jz .done
-	mov ah, 0x0e
-	int 0x10
-	jmp print_string
+	mov ah, 0x0f
+	stosw
+	jmp .print
 .done:
-	ret
+	jmp $
+align 8
+gdt_start:
+	
+	dq 0x0000000000000000
+	dq 0x00CF9A000000FFFF
+	dq 0x00CF92000000FFFF
+gdt_end:
 
-msg_stage1 db "Stage1: OK", 0
+gdt_descriptor:
+	dw gdt_end - gdt_start - 1
+	dd gdt_start
+
+pm_msg_ok db "Protected mode: OK", 0
+
