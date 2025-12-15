@@ -2,6 +2,7 @@ bits 16
 org 0x7c00
 mov ah, 0x00
 mov al, 0x03
+int 0x10
 start:
 	cli
 	xor ax, ax
@@ -27,7 +28,8 @@ start:
 
 	int 0x13
 	jc disk_error
-
+	
+	mov dl, [boot_drive]
 	jmp 0x7e0:0x0000
 
 disk_error:
