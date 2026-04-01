@@ -45,4 +45,5 @@ Q. Why does this repo even have an FAQ?
 A. I don't know, i just wanted to write a README, why not  
 
 
-### If you see goofy ahh comments in the code, then know that these comments were made when I decided to make a joke, but most of the comments are created informatively (❁´◡`❁)
+### If you see goofy ahh comments in the code, then know that these comments were made when I decided to make a joke, but most of the comments are created informatively  
+(❁´◡`❁)  
