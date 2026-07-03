@@ -112,7 +112,7 @@ void kmain(void) {
     init_terminal();
 
     // Первое что ты видишь
-    kprint("TarhunOS (v0.42)\n");
+    kprint("ponOS (v0.67)\n");
     kprint("Type 'help' to get started.\n\n");
     kprint("[NO_ONE@Not_Linux_Terminal_trust]$ ");
 
