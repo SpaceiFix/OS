@@ -35,7 +35,7 @@ static Command commands[] = {
     {"write", "Write text to file", write_command},
     {"disk-debug", "Hardware disk read/write test", disk_debug_command},
     {"rm", "Delete a file from disk", rm_command},
-    {(void*)0,    (void*)0,                            (void*)0}
+    {(void*)0,    (void*)0,}
 };
 
 #endif
